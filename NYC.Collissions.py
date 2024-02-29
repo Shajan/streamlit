@@ -20,7 +20,7 @@ def load_data(nrows):
   data.rename(columns={'crash date_crash time' : 'date/time'}, inplace=True)
 
   # Convert to numeric
-  numeric_cols = ['number of persons injured', 'number of pedestrians injured']
+  numeric_cols = ['number of persons injured', 'number of pedestrians injured', 'number of motorist injured']
   data[numeric_cols] = data[numeric_cols].apply(pd.to_numeric, errors='coerce') # 'coerce' sets invalid to NaN 
   data.dropna(subset=numeric_cols, inplace=True)
 
@@ -38,7 +38,7 @@ st.map(data.query("`number of persons injured` >= @injured_people")[['latitude',
 st.header("Collissions during a given hour")
 hour = st.sidebar.selectbox("Hour of the day", range(0, 24), 1)
 
-print(data.columns)
+#print(data.columns)
 data = data[data['date/time'].dt.hour == hour]
 
 st.markdown(f"Collisions between {hour} and {(hour + 1) % 24}")
